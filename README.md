@@ -146,6 +146,31 @@ docker build -t cloudhire-nexus-backend .
 docker run -p 5000:5000 --env-file .env cloudhire-nexus-backend
 ```
 
+## Security Considerations
+
+**IMPORTANT**: This is a development version. Before deploying to production:
+
+1. **Add Authentication**: All API endpoints are currently unauthenticated. You must add API key authentication or OAuth before exposing to the internet.
+2. **Secure Sensitive Endpoints**: The `/api/settings` endpoint returns and accepts sensitive data (API keys, SMTP passwords). Implement proper access controls.
+3. **Environment Variables**: Never commit real API keys or passwords to version control.
+4. **HTTPS Only**: Always use HTTPS in production to encrypt sensitive data in transit.
+
+Example authentication middleware (add to `app/main.py`):
+```python
+from fastapi import Security, HTTPException, status
+from fastapi.security import APIKeyHeader
+
+API_KEY_HEADER = APIKeyHeader(name="X-API-Key")
+
+async def verify_api_key(api_key: str = Security(API_KEY_HEADER)):
+    if api_key != os.getenv("API_KEY"):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Invalid API key"
+        )
+    return api_key
+```
+
 ## License
 
 MIT License

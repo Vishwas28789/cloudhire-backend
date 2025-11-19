@@ -9,13 +9,14 @@ from app.utils.logger import logger
 
 def schedule_automatic_followup(job_id: int):
     with Session(engine) as session:
+        from sqlmodel import select
+        
         job = session.get(Job, job_id)
         if not job or not job.applied:
             return
         
-        settings = session.exec(
-            session.query(Settings).where(Settings.user_id == 1)
-        ).first()
+        statement = select(Settings).where(Settings.user_id == 1)
+        settings = session.exec(statement).first()
         
         delay_days = settings.followup_delay_days if settings else 7
         
