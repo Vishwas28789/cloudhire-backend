@@ -14,7 +14,7 @@ class JobCreate(BaseModel):
     salary_min: Optional[int] = None
     salary_max: Optional[int] = None
     salary_currency: Optional[str] = None
-    metadata: Optional[Dict[str, Any]] = None
+    job_metadata: Optional[Dict[str, Any]] = None
 
 
 class JobUpdate(BaseModel):

@@ -26,6 +26,6 @@ class EmailLog(SQLModel, table=True):
     
     sent_at: Optional[datetime] = Field(default=None)
     
-    metadata: Optional[Dict[str, Any]] = Field(default=None, sa_column=Column(JSON))
+    email_metadata: Optional[Dict[str, Any]] = Field(default=None, sa_column=Column(JSON))
     
     created_at: datetime = Field(default_factory=datetime.utcnow)

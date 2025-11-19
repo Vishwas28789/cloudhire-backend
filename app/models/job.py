@@ -1,4 +1,4 @@
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 from datetime import datetime
 from sqlmodel import SQLModel, Field, Column, JSON
 
@@ -33,10 +33,7 @@ class Job(SQLModel, table=True):
     application_date: Optional[datetime] = Field(default=None)
     application_status: str = Field(default="pending", max_length=50)
     
-    metadata: Optional[Dict[str, Any]] = Field(default=None, sa_column=Column(JSON))
+    job_metadata: Optional[Dict[str, Any]] = Field(default=None, sa_column=Column(JSON))
     
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
-
-
-from typing import List

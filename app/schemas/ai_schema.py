@@ -21,4 +21,4 @@ class ManualInputRequest(BaseModel):
     content_type: str
     content: str
     job_id: Optional[int] = None
-    metadata: Optional[dict] = None
+    input_metadata: Optional[dict] = None
